@@ -6,7 +6,13 @@ import {
   GoogleAuthProvider,
 } from "firebase/auth";
 
-// Your web app's Firebase configuration
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  setDoc,
+} from "firebase/firestore";
+
 const firebaseConfig = {
   apiKey: "AIzaSyAjbGQomoABeaouQDq-BkyDX4IKDYTiVpU",
   authDomain: "crwn-clothing-db-16026.firebaseapp.com",
@@ -16,7 +22,6 @@ const firebaseConfig = {
   appId: "1:944945443845:web:88cccb296ddfacfb15186c",
 };
 
-// Initialize Firebase
 const firebaseApp = initializeApp(firebaseConfig);
 
 const provider = new GoogleAuthProvider();
@@ -28,3 +33,26 @@ provider.setCustomParameters({
 export const auth = getAuth();
 export const signInWithGooglePopup = () =>
   signInWithPopup(auth, provider);
+
+export const db = getFirestore();
+
+export const createUserDocumentFromAuth = async (userAuth) => {
+  const userDocRef = doc(db, "users", userAuth.uid);
+  const userSnapshot = await getDoc(userDocRef);
+  console.log(userSnapshot.exists());
+
+  if (!userSnapshot.exists()) {
+    const { displayName, email } = userAuth;
+    const createdAt = new Date();
+    try {
+      await setDoc(userDocRef, {
+        displayName,
+        email,
+        createdAt,
+      });
+    } catch (error) {
+      console.log("error creating the user", error.message);
+    }
+  }
+  return userDocRef;
+};
