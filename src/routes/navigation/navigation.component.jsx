@@ -29,12 +29,6 @@ const Navigation = () => {
           >
             SIGN IN
           </Link>
-          <Link
-            className="nav-link"
-            to="/about"
-          >
-            ABOUT
-          </Link>
         </div>
       </div>
       <Outlet />

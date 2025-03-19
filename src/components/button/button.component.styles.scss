@@ -1,0 +1,48 @@
+// Variables
+$button-colors: (
+  "default": black,
+  "google": #4285f4,
+  "inverted": white,
+);
+
+// Base button styles
+.button {
+  min-width: 165px;
+  width: auto;
+  height: 50px;
+  letter-spacing: 0.5px;
+  line-height: 50px;
+  padding: 0 35px;
+  font-size: 15px;
+  text-transform: uppercase;
+  font-weight: bolder;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  // Button type modifiers
+  @each $type, $color in $button-colors {
+    &--#{$type} {
+      background-color: $color;
+      color: if($type == "inverted", black, white);
+      border: if($type == "inverted", 1px solid black, none);
+
+      &:hover {
+        @if $type == "default" {
+          background-color: white;
+          color: black;
+          border: 1px solid black;
+        } @else if $type == "google" {
+          background-color: darken($color, 5%);
+          border: none;
+        } @else if $type == "inverted" {
+          background-color: black;
+          color: white;
+          border: none;
+        }
+      }
+    }
+  }
+}
