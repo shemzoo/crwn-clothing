@@ -8,12 +8,10 @@ $button-colors: (
 // Base button styles
 .button {
   min-width: 165px;
-  width: auto;
   height: 50px;
   letter-spacing: 0.5px;
-  line-height: 50px;
-  padding: 0 35px;
-  font-size: 15px;
+  padding: 0 15px;
+  font-size: 14px;
   text-transform: uppercase;
   font-weight: bolder;
   border: none;
@@ -21,6 +19,11 @@ $button-colors: (
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 15px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border-radius: 2px;
 
   // Button type modifiers
   @each $type, $color in $button-colors {
