@@ -1,4 +1,4 @@
-import { Fragment, useContext } from "react";
+import { Fragment, useContext, useState } from "react";
 import { Outlet, Link } from "react-router-dom";
 
 import { ReactComponent as CrwnLogo } from "../../assets/crown.svg";
@@ -14,6 +14,11 @@ import CartDropdown from "../../components/cart-dropdown/cart-dropdown.component
 
 const Navigation = () => {
   const { currentUser } = useContext(UserContext);
+  const [isCartOpen, setIsCartOpen] = useState(false);
+
+  const toggleCartHandler = () => {
+    setIsCartOpen(!isCartOpen);
+  };
 
   return (
     <Fragment>
@@ -47,9 +52,9 @@ const Navigation = () => {
               SIGN IN
             </Link>
           )}
-          <CartIcon />
+          <CartIcon onClick={toggleCartHandler} />
         </div>
-        <CartDropdown />
+        {isCartOpen ? <CartDropdown /> : null}
       </div>
       <Outlet />
     </Fragment>
