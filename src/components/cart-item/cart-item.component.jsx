@@ -7,7 +7,7 @@ const CartItem = ({ cartItem }) => {
     <div className="cart-item-container">
       <img
         src={imageUrl}
-        alt={name}
+        alt={`${name}`}
       />
       <div className="item-details">
         <span className="name">{name}</span>
