@@ -2,7 +2,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 30px;
-  padding: 40px;
+  padding: 40px 0px;
   max-width: 1400px;
   margin: 0 auto;
 
@@ -15,5 +15,24 @@
   @media screen and (max-width: 400px) {
     grid-template-columns: 1fr;
     padding: 15px;
+  }
+}
+
+.category-title {
+  // padding: 0 40px;
+  margin: 40px 0 0;
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+  text-transform: uppercase;
+
+  @media screen and (max-width: 800px) {
+    padding: 0 20px;
+    margin: 20px 0 0;
+  }
+
+  @media screen and (max-width: 400px) {
+    padding: 0 15px;
+    margin: 15px 0 0;
   }
 }
