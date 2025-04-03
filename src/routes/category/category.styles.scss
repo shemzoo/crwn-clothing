@@ -1,0 +1,18 @@
+.shop-category-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+}
+
+.title {
+  font-size: 28px;
+  margin-bottom: 25px;
+  text-align: center; // Center the text within the title element
+}
+
+@media (max-width: 600px) {
+  .shop-category-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+}
