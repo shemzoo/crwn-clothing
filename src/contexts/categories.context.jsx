@@ -20,7 +20,6 @@ export const CategoriesProvider = ({ children }) => {
   }, []);
 
   const categoriesArray = useMemo(() => {
-    console.log("Calculating categoriesArray in context");
     return Object.keys(categoriesMap).map((categoryKey) => {
       const firstProduct = categoriesMap[categoryKey][0];
       return {

@@ -1,13 +1,13 @@
-import "./button.component.styles.scss";
+import { ButtonContainer } from "./button.component.styles.jsx";
 
 const Button = ({ children, buttonType, ...otherProps }) => {
   return (
-    <button
-      className={`button button--${buttonType}`}
+    <ButtonContainer
+      $buttonType={buttonType}
       {...otherProps}
     >
       {children}
-    </button>
+    </ButtonContainer>
   );
 };
 

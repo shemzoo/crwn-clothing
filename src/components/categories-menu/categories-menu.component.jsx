@@ -1,19 +1,19 @@
 import CategoryItem from "../category-item/category-item.component.jsx";
-import "./category-menu.styles.scss";
+import { CategoriesContainer } from "./category-menu.styles.jsx";
 
 const CategoryMenu = ({ categories }) => {
   return (
-    <div className="categories-container">
+    <CategoriesContainer>
       {categories.map(({ title, id, imageUrl }) => {
         return (
           <CategoryItem
             key={id}
             title={title}
-            imageUrl={imageUrl}
+            $imageUrl={imageUrl}
           />
         );
       })}
-    </div>
+    </CategoriesContainer>
   );
 };
 

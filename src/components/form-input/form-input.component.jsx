@@ -1,4 +1,8 @@
-import "./form-input.styles.scss";
+import {
+  FormInputLabel,
+  Input,
+  Group,
+} from "./form-input.styles.jsx";
 
 const FormInput = ({
   label,
@@ -11,9 +15,8 @@ const FormInput = ({
   autoComplete,
 }) => {
   return (
-    <div className="group">
-      <input
-        className="form-input"
+    <Group>
+      <Input
         type={type}
         required={required}
         name={name}
@@ -22,15 +25,11 @@ const FormInput = ({
         autoComplete={autoComplete}
       />
       {label ? (
-        <label
-          className={`${
-            value.length ? "shrink" : ""
-          } form-input-label`}
-        >
+        <FormInputLabel $shrink={value.length}>
           {label}
-        </label>
+        </FormInputLabel>
       ) : null}
-    </div>
+    </Group>
   );
 };
 
