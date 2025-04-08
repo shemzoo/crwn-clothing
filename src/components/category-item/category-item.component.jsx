@@ -8,9 +8,11 @@ import { useNavigate } from "react-router-dom";
 
 const CategoryItem = ({ $imageUrl, title }) => {
   let navigate = useNavigate();
+
   const onNavigateHandler = () => {
     navigate(`shop/${title.toLowerCase()}`);
   };
+
   return (
     <CategoryContainer onClick={onNavigateHandler}>
       <BackgroundImage $imageUrl={$imageUrl}></BackgroundImage>
