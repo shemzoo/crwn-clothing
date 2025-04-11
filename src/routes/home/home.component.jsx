@@ -1,10 +1,23 @@
 import { Outlet } from "react-router-dom";
 import CategoriesMenu from "../../components/categories-menu/categories-menu.component";
-import { useContext } from "react";
-import { CategoriesContext } from "../../contexts/categories.context";
+import { useMemo } from "react";
+import { useSelector } from "react-redux";
+import { selectCategoriesMap } from "../../store/categories/categories.selector";
 
 const Home = () => {
-  const { categoriesArray } = useContext(CategoriesContext);
+  const categoriesMap = useSelector(selectCategoriesMap);
+
+  const categoriesArray = useMemo(() => {
+    return Object.keys(categoriesMap).map((categoryKey) => {
+      const firstProduct = categoriesMap[categoryKey][0];
+      return {
+        id: firstProduct.id,
+        title:
+          categoryKey.charAt(0).toUpperCase() + categoryKey.slice(1),
+        imageUrl: firstProduct.imageUrl,
+      };
+    });
+  }, [categoriesMap]);
 
   return (
     <div>
