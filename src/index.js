@@ -2,8 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
-// import { UserProvider } from "./contexts/user.context"; deprecated
-// import { CategoriesProvider } from "./contexts/categories.context";
 import { CartItemsProvider } from "./contexts/cart.context";
 import { Provider } from "react-redux";
 import { store } from "../src/store/store";

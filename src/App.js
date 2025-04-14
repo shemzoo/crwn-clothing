@@ -6,7 +6,7 @@ import { createUserDocumentFromAuth } from "../src/utils/firebase/firebase.utils
 import { getCategoriesAndDocuments } from "@/utils/firebase/firebase.utils";
 
 import { setCurrentUser } from "../src/store/user/user.action";
-import { setCategoriesMap } from "../src/store/categories/categories.action";
+import { setCategories } from "../src/store/categories/categories.action";
 
 import Home from "./routes/home/home.component";
 import Navigation from "./routes/navigation/navigation.component";
@@ -30,10 +30,11 @@ const App = () => {
 
   useEffect(() => {
     const getCategoriesMap = async () => {
-      const categoriesMap = await getCategoriesAndDocuments(
+      const categoriesArray = await getCategoriesAndDocuments(
         "categories"
       );
-      dispatch(setCategoriesMap(categoriesMap));
+      console.log(categoriesArray);
+      dispatch(setCategories(categoriesArray));
     };
     getCategoriesMap();
   }, [dispatch]);
