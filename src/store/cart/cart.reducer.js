@@ -75,7 +75,6 @@ const removeItemFromCart = (state, cartItemToRemove) => {
     (cartItem) => cartItem.id === cartItemToRemove.id
   );
 
-  // Check if quantity is greater than 1, if it is decrement quantity
   if (existingCartItem.quantity > 1) {
     return cartItems.map((cartItem) =>
       cartItem.id === cartItemToRemove.id
@@ -84,15 +83,12 @@ const removeItemFromCart = (state, cartItemToRemove) => {
     );
   }
 
-  // if quantity is 1, remove item from cart
   if (existingCartItem.quantity === 1) {
-    return clearItemFromCart(state.cartItems, cartItemToRemove); // Pass cartItems directly
+    return clearItemFromCart(state.cartItems, cartItemToRemove);
   }
-  // This case should ideally not be reached if logic is correct, but return original cartItems if needed
   return cartItems;
 };
 
-// Note: This function now expects cartItems array directly, not the full state
 const clearItemFromCart = (cartItems, cartItemToClear) => {
   return cartItems.filter(
     (cartItem) => cartItem.id !== cartItemToClear.id
