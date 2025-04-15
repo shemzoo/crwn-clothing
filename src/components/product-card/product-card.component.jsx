@@ -6,16 +6,15 @@ import {
 } from "./product-card.styles.jsx";
 
 import Button from "../button/button.component";
-
-import { useContext } from "react";
-import { CartContext } from "../../contexts/cart.context";
+import { addItem } from "@/store/cart/cart.action";
+import { useDispatch } from "react-redux";
 
 const ProductCard = ({ product }) => {
+  const dispatch = useDispatch();
   const { name, price, imageUrl } = product;
-  const { addItemToCart } = useContext(CartContext);
 
-  const addProductToCart = () => {
-    addItemToCart(product);
+  const addProductToCart = (product) => {
+    dispatch(addItem(product));
   };
 
   return (
@@ -30,7 +29,7 @@ const ProductCard = ({ product }) => {
       </Footer>
       <Button
         $buttonType="inverted"
-        onClick={addProductToCart}
+        onClick={() => addProductToCart(product)}
       >
         Add to cart
       </Button>

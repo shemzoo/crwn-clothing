@@ -1,12 +1,15 @@
 import { Routes, Route } from "react-router-dom";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { onAuthStateChangedListener } from "../src/utils/firebase/firebase.utils";
 import { createUserDocumentFromAuth } from "../src/utils/firebase/firebase.utils";
 import { getCategoriesAndDocuments } from "@/utils/firebase/firebase.utils";
 
 import { setCurrentUser } from "../src/store/user/user.action";
 import { setCategories } from "../src/store/categories/categories.action";
+
+import { selectCartItems } from "./store/cart/cart.selector";
+import { updateTotalQuantity } from "./store/cart/cart.action";
 
 import Home from "./routes/home/home.component";
 import Navigation from "./routes/navigation/navigation.component";
@@ -16,6 +19,16 @@ import Checkout from "./routes/checkout/checkout.component";
 
 const App = () => {
   const dispatch = useDispatch();
+  const cartItems = useSelector(selectCartItems);
+
+  useEffect(() => {
+    console.log("cartItems in App: ", cartItems);
+    const newTotalQuantity = cartItems.reduce(
+      (total, cartItem) => total + cartItem.quantity,
+      0
+    );
+    dispatch(updateTotalQuantity(newTotalQuantity));
+  }, [cartItems, dispatch]);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChangedListener((user) => {
