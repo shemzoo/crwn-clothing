@@ -6,7 +6,7 @@ import { createUserDocumentFromAuth } from "../src/utils/firebase/firebase.utils
 import { getCategoriesAndDocuments } from "@/utils/firebase/firebase.utils";
 
 import { setCurrentUser } from "../src/store/user/user.action";
-import { setCategories } from "../src/store/categories/categories.action";
+import { fetchCategoriesAsync } from "../src/store/categories/categories.action";
 
 import { selectCartItems } from "./store/cart/cart.selector";
 import { updateTotalQuantity } from "./store/cart/cart.action";
@@ -22,7 +22,6 @@ const App = () => {
   const cartItems = useSelector(selectCartItems);
 
   useEffect(() => {
-    console.log("cartItems in App: ", cartItems);
     const newTotalQuantity = cartItems.reduce(
       (total, cartItem) => total + cartItem.quantity,
       0
@@ -42,14 +41,7 @@ const App = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    const getCategoriesMap = async () => {
-      const categoriesArray = await getCategoriesAndDocuments(
-        "categories"
-      );
-      console.log(categoriesArray);
-      dispatch(setCategories(categoriesArray));
-    };
-    getCategoriesMap();
+    dispatch(fetchCategoriesAsync());
   }, [dispatch]);
 
   return (

@@ -2,18 +2,22 @@ import { ShopCategoryContainer, Title } from "./category.styles.jsx";
 import { useEffect, Fragment, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import ProductCard from "../../components/product-card/product-card.component";
 
-import { selectCategoriesMap } from "../../store/categories/categories.selector.js";
+import ProductCard from "../../components/product-card/product-card.component";
+import Spinner from "../../components/spinner/spinner.component";
+
+import {
+  selectCategoriesMap,
+  selectCategoriesIsLoading,
+} from "../../store/categories/categories.selector.js";
 
 const Category = () => {
   const { category } = useParams();
-  console.log("render/re-rendering Category component");
   const categoriesMap = useSelector(selectCategoriesMap);
+  const isLoading = useSelector(selectCategoriesIsLoading);
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    console.log("useEffect fired calling setProducts");
     if (categoriesMap) {
       setProducts(categoriesMap[category] || []);
     }
@@ -22,18 +26,22 @@ const Category = () => {
   return (
     <Fragment>
       <Title>{category.toUpperCase()}</Title>
-      <ShopCategoryContainer>
-        {products.length > 0 ? (
-          products.map((product) => (
-            <ProductCard
-              key={product.id}
-              product={product}
-            />
-          ))
-        ) : (
-          <div>No products found in this category.</div>
-        )}
-      </ShopCategoryContainer>
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        <ShopCategoryContainer>
+          {products.length > 0 ? (
+            products.map((product) => (
+              <ProductCard
+                key={product.id}
+                product={product}
+              />
+            ))
+          ) : (
+            <div>No products found in this category.</div>
+          )}
+        </ShopCategoryContainer>
+      )}
     </Fragment>
   );
 };
