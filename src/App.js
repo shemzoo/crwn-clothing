@@ -1,12 +1,11 @@
 import { Routes, Route } from "react-router-dom";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { onAuthStateChangedListener } from "../src/utils/firebase/firebase.utils";
-import { createUserDocumentFromAuth } from "../src/utils/firebase/firebase.utils";
-import { getCategoriesAndDocuments } from "@/utils/firebase/firebase.utils";
 
-import { setCurrentUser } from "../src/store/user/user.action";
-import { fetchCategoriesAsync } from "../src/store/categories/categories.action";
+import { getCurrentUser } from "../src/utils/firebase/firebase.utils";
+
+import { checkUserSession } from "../src/store/user/user.action";
+import { fetchCategoriesStart } from "../src/store/categories/categories.action";
 
 import { selectCartItems } from "./store/cart/cart.selector";
 import { updateTotalQuantity } from "./store/cart/cart.action";
@@ -30,18 +29,11 @@ const App = () => {
   }, [cartItems, dispatch]);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChangedListener((user) => {
-      if (user) {
-        createUserDocumentFromAuth(user);
-      }
-      dispatch(setCurrentUser(user));
-    });
-
-    return unsubscribe;
+    dispatch(checkUserSession());
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(fetchCategoriesAsync());
+    dispatch(fetchCategoriesStart());
   }, [dispatch]);
 
   return (
