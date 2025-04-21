@@ -1,12 +1,14 @@
 import { Routes, Route } from "react-router-dom";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { onAuthStateChangedListener } from "../src/utils/firebase/firebase.utils";
-import { createUserDocumentFromAuth } from "../src/utils/firebase/firebase.utils";
-import { getCategoriesAndDocuments } from "@/utils/firebase/firebase.utils";
+import { useDispatch, useSelector } from "react-redux";
 
-import { setCurrentUser } from "../src/store/user/user.action";
-import { setCategoriesMap } from "../src/store/categories/categories.action";
+import { getCurrentUser } from "../src/utils/firebase/firebase.utils";
+
+import { checkUserSession } from "../src/store/user/user.action";
+import { fetchCategoriesStart } from "../src/store/categories/categories.action";
+
+import { selectCartItems } from "./store/cart/cart.selector";
+import { updateTotalQuantity } from "./store/cart/cart.action";
 
 import Home from "./routes/home/home.component";
 import Navigation from "./routes/navigation/navigation.component";
@@ -16,26 +18,22 @@ import Checkout from "./routes/checkout/checkout.component";
 
 const App = () => {
   const dispatch = useDispatch();
+  const cartItems = useSelector(selectCartItems);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChangedListener((user) => {
-      if (user) {
-        createUserDocumentFromAuth(user);
-      }
-      dispatch(setCurrentUser(user));
-    });
+    const newTotalQuantity = cartItems.reduce(
+      (total, cartItem) => total + cartItem.quantity,
+      0
+    );
+    dispatch(updateTotalQuantity(newTotalQuantity));
+  }, [cartItems, dispatch]);
 
-    return unsubscribe;
+  useEffect(() => {
+    dispatch(checkUserSession());
   }, [dispatch]);
 
   useEffect(() => {
-    const getCategoriesMap = async () => {
-      const categoriesMap = await getCategoriesAndDocuments(
-        "categories"
-      );
-      dispatch(setCategoriesMap(categoriesMap));
-    };
-    getCategoriesMap();
+    dispatch(fetchCategoriesStart());
   }, [dispatch]);
 
   return (

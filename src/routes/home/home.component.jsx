@@ -7,6 +7,8 @@ import { selectCategoriesMap } from "../../store/categories/categories.selector"
 const Home = () => {
   const categoriesMap = useSelector(selectCategoriesMap);
 
+  console.log(categoriesMap);
+
   const categoriesArray = useMemo(() => {
     return Object.keys(categoriesMap).map((categoryKey) => {
       const firstProduct = categoriesMap[categoryKey][0];
