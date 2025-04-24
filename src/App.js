@@ -8,7 +8,10 @@ import { checkUserSession } from "../src/store/user/user.action";
 import { fetchCategoriesStart } from "../src/store/categories/categories.action";
 
 import { selectCartItems } from "./store/cart/cart.selector";
-import { updateTotalQuantity } from "./store/cart/cart.action";
+import {
+  updateTotalQuantity,
+  updateTotalPrice,
+} from "./store/cart/cart.action";
 
 import Home from "./routes/home/home.component";
 import Navigation from "./routes/navigation/navigation.component";
@@ -26,6 +29,14 @@ const App = () => {
       0
     );
     dispatch(updateTotalQuantity(newTotalQuantity));
+  }, [cartItems, dispatch]);
+
+  useEffect(() => {
+    const newTotalPrice = cartItems.reduce(
+      (total, cartItem) => total + cartItem.quantity * cartItem.price,
+      0
+    );
+    dispatch(updateTotalPrice(newTotalPrice));
   }, [cartItems, dispatch]);
 
   useEffect(() => {

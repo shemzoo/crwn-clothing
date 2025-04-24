@@ -1,6 +1,8 @@
 import styled, { css } from "styled-components";
 import { darken } from "polished";
 
+import { SpinnerContainer } from "../spinner/spinner.styles";
+
 const baseStyles = css`
   min-width: 165px;
   height: 50px;
@@ -56,4 +58,9 @@ const variantStyles = {
 export const ButtonContainer = styled.button`
   ${baseStyles}
   ${({ $buttonType }) => variantStyles[$buttonType]}
+`;
+
+export const ButtonSpinner = styled(SpinnerContainer)`
+  width: 30px;
+  height: 30px;
 `;

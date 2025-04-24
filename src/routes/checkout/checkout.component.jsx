@@ -5,12 +5,18 @@ import {
   Total,
 } from "./checkout.styles.jsx";
 import CheckoutItem from "../../components/checkout-item/checkout-item.component";
+import PaymentForm from "../../components/payment-form/payment-form.component.jsx";
 
 import { useSelector } from "react-redux";
-import { selectCartItems } from "@/store/cart/cart.selector";
+import {
+  selectCartItems,
+  selectTotalPrice,
+} from "@/store/cart/cart.selector";
 
 const Checkout = () => {
   const cartItems = useSelector(selectCartItems);
+  const totalPrice = useSelector(selectTotalPrice);
+  console.log("TOTAL PRICE:", totalPrice);
 
   return (
     <CheckoutContainer>
@@ -39,16 +45,8 @@ const Checkout = () => {
           />
         );
       })}
-      {cartItems.length > 0 && (
-        <Total>
-          Total: $
-          {cartItems.reduce(
-            (total, cartItem) =>
-              total + cartItem.quantity * cartItem.price,
-            0
-          )}
-        </Total>
-      )}
+      {cartItems.length > 0 && <Total>Total: ${totalPrice}</Total>}
+      <PaymentForm />
     </CheckoutContainer>
   );
 };

@@ -1,12 +1,21 @@
-import { ButtonContainer } from "./button.component.styles.jsx";
+import {
+  ButtonContainer,
+  ButtonSpinner,
+} from "./button.component.styles.jsx";
 
-const Button = ({ children, buttonType, ...otherProps }) => {
+const Button = ({
+  children,
+  buttonType,
+  isLoading,
+  ...otherProps
+}) => {
   return (
     <ButtonContainer
       $buttonType={buttonType}
+      disabled={isLoading}
       {...otherProps}
     >
-      {children}
+      {isLoading ? <ButtonSpinner /> : children}
     </ButtonContainer>
   );
 };
