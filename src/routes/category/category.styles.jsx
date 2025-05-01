@@ -4,6 +4,7 @@ export const ShopCategoryContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 30px;
+  padding-bottom: 100px;
 
   @media (max-width: 600px) {
     grid-template-columns: repeat(2, 1fr);
