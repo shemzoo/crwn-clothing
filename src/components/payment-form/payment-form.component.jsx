@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { selectTotalPrice } from "../../store/cart/cart.selector";
 import { selectCurrentUser } from "../../store/user/user.selector";
+import { clearCart } from "../../store/cart/cart.action";
 
 import {
   CardElement,
@@ -13,10 +14,14 @@ import {
   FormContainer,
   PaymentButton,
   PaymentTitle,
+  TestCardContainer,
+  TestCardTitle,
+  TestCardInfo,
 } from "./payment-form.styles";
 
 export const PaymentForm = () => {
   const stripe = useStripe();
+  const dispatch = useDispatch();
   const elements = useElements();
   const amount = useSelector(selectTotalPrice);
   const currentUser = useSelector(selectCurrentUser);
@@ -64,6 +69,8 @@ export const PaymentForm = () => {
     } else {
       alert("Payment successful!");
     }
+
+    dispatch(clearCart());
   };
 
   return (
@@ -77,6 +84,15 @@ export const PaymentForm = () => {
         >
           PAY NOW
         </PaymentButton>
+        <TestCardContainer>
+          <TestCardTitle>Test Card Information</TestCardTitle>
+          <TestCardInfo>
+            Card number: 4242 4242 4242 4242
+          </TestCardInfo>
+          <TestCardInfo>MM YY: 02 / 42</TestCardInfo>
+          <TestCardInfo>CVC: 424</TestCardInfo>
+          <TestCardInfo>Index: 42424</TestCardInfo>
+        </TestCardContainer>
       </FormContainer>
     </PaymentFormContainer>
   );

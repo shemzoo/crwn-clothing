@@ -8,6 +8,8 @@ import {
   signUpSuccess,
 } from "./user.action";
 
+import { clearCart } from "../../store/cart/cart.action";
+
 import {
   getCurrentUser,
   createUserDocumentFromAuth,
@@ -52,6 +54,7 @@ export function* signOut() {
   try {
     yield call(signOutUser);
     yield put(signOutSuccess());
+    yield put(clearCart()); // Dispatch clearCart after signOutSuccess
   } catch (error) {
     console.log("Error signing out:", error);
   }
